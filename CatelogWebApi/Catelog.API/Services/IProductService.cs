@@ -3,7 +3,7 @@ using Catelog.API.Models;
 
 namespace Catelog.API.Services
 {
-    public class IProductService : IProduct
+    public class IProductService //: IProduct
     {
         private static List<Product> products = new List<Product>()
         {
@@ -13,7 +13,7 @@ namespace Catelog.API.Services
         };
 
             
-        public IEnumerable<Product?> GetProducts()
+        public IEnumerable<Product> GetProducts()
         {
             return products;
         }

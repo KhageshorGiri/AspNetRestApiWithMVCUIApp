@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<CatelogWebAppliction.Models.Product>
+
+<div>
+    <table class="table table-strriped">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Product Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.productID</td>
+                    <td>@item.productName</td>
+                    <td>@item.productPrice</td>
+                    <td>@item.productDescription</td>                  
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+</div>

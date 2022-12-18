@@ -26,6 +26,7 @@ builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
 });
 
 builder.Services.AddSingleton<IProduct, ProductServiceMongoDb>();
+builder.Services.AddSingleton<IUserManagement, UserManagementService>();
 
 var app = builder.Build();
 

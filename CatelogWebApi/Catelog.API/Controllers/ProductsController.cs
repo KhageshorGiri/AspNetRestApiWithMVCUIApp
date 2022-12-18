@@ -19,7 +19,7 @@ namespace Catelog.API.Controllers
       
         // GET /products
         [HttpGet]
-        public async Task<IEnumerable<ProductDto?>> GetProducts()
+        public async Task<IEnumerable<ProductDto?>> GetProductsAsync()
         {
             var products = (await productService.GetProductsAsync()).Select(productItem => productItem?.AsDtos());
 
@@ -28,7 +28,7 @@ namespace Catelog.API.Controllers
 
         //GET /products/{id}
         [HttpGet("{Id}")]
-        public async Task<ActionResult<ProductDto?>> GetProduct(Guid Id)
+        public async Task<ActionResult<ProductDto?>> GetProductAsync(Guid Id)
         {
             var singleProduct = await productService.GetProductAsync(Id);
             if(singleProduct == null)
@@ -40,7 +40,7 @@ namespace Catelog.API.Controllers
 
         //POST /products
         [HttpPost]
-        public async Task CreateProduct(CreateProductDto createProductDto)
+        public async Task<ActionResult> CreateProductAsync(CreateProductDto createProductDto)
         {
             Product product = new()
             {
@@ -51,11 +51,12 @@ namespace Catelog.API.Controllers
                 CreatedDate = DateTime.UtcNow,
             };
             await productService.CreateProductAsync(product);
+            return NoContent();
         }
 
         //PUT /products/{id}
         [HttpPut("{Id}")]
-        public async Task<ActionResult> UpdateProduct(Guid Id, UpdateProductDto updateProductDto)
+        public async Task<ActionResult> UpdateProductAsync(Guid Id, UpdateProductDto updateProductDto)
         {
             var existingProduct = productService.GetProductAsync(Id);
             if (existingProduct == null)
@@ -75,7 +76,7 @@ namespace Catelog.API.Controllers
 
         //DELETE /products/{id}
         [HttpDelete("{Id}")]
-        public async Task<ActionResult> DeleteProduct(Guid Id)
+        public async Task<ActionResult> DeleteProductAsync(Guid Id)
         {
             var existingProduct= productService.GetProductAsync(Id);
             if(existingProduct == null)

@@ -1,11 +1,13 @@
 ﻿using Catelog.API.Dtos.ProductDtos;
 using Catelog.API.Interfaces;
 using Catelog.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catelog.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("products")]
     public class ProductsController : ControllerBase

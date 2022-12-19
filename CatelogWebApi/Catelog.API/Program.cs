@@ -1,10 +1,13 @@
 using Catelog.API.Configurations;
 using Catelog.API.Interfaces;
 using Catelog.API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -25,8 +28,27 @@ builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
     return new MongoClient(mongoDbSetting.ConnectionString);
 });
 
+// add service to validate the JWT token
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "",
+            ValidAudience = "",
+            IssuerSigningKey = new SymmetricSecurityKey(
+                                            Encoding.UTF8.GetBytes("ThisisSecretXKeyThaGeneratETheJWTTokenishdgihsuihiwhj")),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+
 builder.Services.AddSingleton<IProduct, ProductServiceMongoDb>();
 builder.Services.AddSingleton<IUserManagement, UserManagementService>();
+builder.Services.AddSingleton<IAuthentication, AuthenticationService>();
 
 var app = builder.Build();
 
@@ -41,6 +63,8 @@ app.UseHttpsRedirection();
 
 app.UseRouting();  // added to configure endpoints
 
+//  added in pipelint to perform authentication and authorization for our web api
+app.UseAuthentication();
 app.UseAuthorization();
 
 // configured by developer

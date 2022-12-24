@@ -2,6 +2,7 @@
 using Catelog.API.Interfaces;
 using Catelog.API.Models;
 using Catelog.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catelog.API.Controllers
@@ -20,6 +21,7 @@ namespace Catelog.API.Controllers
 
         [HttpPost]
         [Route("/signup")]
+        [AllowAnonymous]
         public async Task<ActionResult> RegisterUser(CreateUserDto createUserDto)
         {
             User user = new()

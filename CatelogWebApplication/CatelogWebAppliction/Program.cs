@@ -11,6 +11,8 @@ builder.Services.AddControllersWithViews();
 // adding serives as DI
 builder.Services.AddSingleton<IProductService, ProductSerivece>();
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

@@ -26,7 +26,7 @@ namespace CatelogWebAppliction.Repositories.Services
             string path = $"{baseUrl}/products";
             HttpResponseMessage response = await httpClient.GetAsync(path);
 
-            List<Product?> productList = null;
+            List<Product?> productList = new List<Product?>();
 
             if (response.IsSuccessStatusCode)
             {
